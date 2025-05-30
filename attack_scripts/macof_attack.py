@@ -19,12 +19,12 @@ def run_attack(params):
 
     try:
         # Comando para capturar o tráfego da interface utilizando tcpdump
-        tcpdump_command = ['tcpdump', '-i', interface, '-w', f'tcpdump_{interface}.pcap']
+        #tcpdump_command = ['tcpdump', '-i', interface, '-w', f'tcpdump_{interface}.pcap']
         # -i <interface>: Especifica a interface de rede a ser monitorada
         # -w <arquivo>: Especifica o arquivo onde o tráfego capturado será salvo
 
-        tcpdump_process = subprocess.Popen(tcpdump_command)  # Inicia o processo tcpdump
-        logger.info(f"Monitorando o tráfego da interface {interface} com tcpdump")
+        #tcpdump_process = subprocess.Popen(tcpdump_command)  # Inicia o processo tcpdump
+        #logger.info(f"Monitorando o tráfego da interface {interface} com tcpdump")
 
         # Comando para executar o ataque com Macof
         attack_command = ['macof', '-i', interface]
@@ -63,5 +63,5 @@ def run_attack(params):
 
     finally:
         # Finalizamos o processo tcpdump após o término do ataque
-        tcpdump_process.terminate()  # Encerramos o monitoramento de tráfego
-        logger.info("Monitoramento tcpdump finalizado")
+        #tcpdump_process.terminate()  # Encerramos o monitoramento de tráfego
+        logger.info("Macof attack finalizado")

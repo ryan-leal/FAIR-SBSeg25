@@ -10,7 +10,7 @@ ATTACK_SCRIPTS = [
 # Deve ter o mesmo nome do REFValor acima e segue o padrao:
 # 'REFValor1': 'valorReal', ...
 TARGET_INFO = {
-    'IP': '127.0.0.1',
+    'IP': '10.0.0.2',
     'INTERFACE': 'h1-eth0',
     'MAX_TIME': '30'
 }

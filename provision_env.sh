@@ -5,10 +5,10 @@
 set -e
 
 # Aceita um flag --no-cli para não abrir o CLI do Mininet
-SKIP_MININET_CLI=0
-if [ "$1" = "--no-cli" ]; then
-  SKIP_MININET_CLI=1
-  echo "[INFO] Modo não-interativo: Mininet não abrirá CLI."
+SKIP_MININET=0
+if [ "$1" = "--no-mininet" ]; then
+  SKIP_MININET=1
+  echo "[INFO] Modo no-mininet: Ambiente sendo levantado sem o mininet."
 fi
 
 # Analise de Pre-requisitos:
@@ -67,6 +67,8 @@ fi
 if ! docker info &> /dev/null; then
   echo "[ERRO] Não foi possível conectar ao Docker daemon."
   echo "[INFO] Caso tenha feito a instalaçao recente do Docker, faça LOGIN novamente para consertar o erro."
+  # Adiciona seu usuário ao grupo docker
+  sudo usermod -aG docker $USER
   exit 1
 fi
 
@@ -177,18 +179,11 @@ sleep 5
 CONTROLLER_IP="127.0.0.1"
 
 # Executa o Mininet conectado ao controlador
-echo "[INFO] Iniciando Mininet com topo simples e conexão ao controlador $CONTROLLER_IP:$OF_PORT"
-if [ "$SKIP_MININET_CLI" -eq 1 ]; then
-  # modo teste: configura topo, verifica pingall e sai
-  sudo mn \
-    --controller=remote,ip=$CONTROLLER_IP,port=$OF_PORT \
-    --topo=tree,depth=2,fanout=2 \
-    --switch=ovsk,protocols=OpenFlow13 \
-    --test pingall
-    
-   echo "[INFO] Topologia subida em modo no-cli. Encerrando provisionamento."
+if [ "$SKIP_MININET" -eq 1 ]; then
+   echo "[INFO] Topologia subida em modo no-Mininet. Encerrando provisionamento."
    exit 0
 else
+  echo "[INFO] Iniciando Mininet com topo simples e conexão ao controlador $CONTROLLER_IP:$OF_PORT"
   # modo interativo (CLI)
   sudo mn --controller=remote,ip=$CONTROLLER_IP,port=$OF_PORT --topo=tree,depth=2,fanout=2 --switch=ovsk,protocols=OpenFlow13
 fi
