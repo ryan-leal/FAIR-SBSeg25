@@ -44,7 +44,7 @@ def main(skip_provision, report):
             click.secho(
                 "\n⚠️  Docker foi instalado, mas você precisa relogar no sistema "
                 "para aplicar as permissões. Depois disso, execute novamente:\n\n"
-                "  python3 orchestrator.py --skip-provision\n",
+                "  sudo python3 orchestrator.py\n",
                 fg='yellow'
             )
             return
