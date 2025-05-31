@@ -18,14 +18,6 @@ def run_attack(params):
         raise ValueError("Parâmetro 'interface' ausente")  # Erro se a interface não for especificada
 
     try:
-        # Comando para capturar o tráfego da interface utilizando tcpdump
-        #tcpdump_command = ['tcpdump', '-i', interface, '-w', f'tcpdump_{interface}.pcap']
-        # -i <interface>: Especifica a interface de rede a ser monitorada
-        # -w <arquivo>: Especifica o arquivo onde o tráfego capturado será salvo
-
-        #tcpdump_process = subprocess.Popen(tcpdump_command)  # Inicia o processo tcpdump
-        #logger.info(f"Monitorando o tráfego da interface {interface} com tcpdump")
-
         # Comando para executar o ataque com Macof
         attack_command = ['macof', '-i', interface]
         # -i <interface>: Especifica a interface de rede para enviar os pacotes
@@ -62,6 +54,4 @@ def run_attack(params):
         return f"Erro desconhecido ao executar MacofAttack na interface {interface}: {e}"
 
     finally:
-        # Finalizamos o processo tcpdump após o término do ataque
-        #tcpdump_process.terminate()  # Encerramos o monitoramento de tráfego
         logger.info("Macof attack finalizado")
