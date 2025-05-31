@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 from mininet.net import Mininet
 from mininet.node import RemoteController, OVSSwitch
 from mininet.topolib import TreeTopo
@@ -8,98 +9,79 @@ import time
 import subprocess
 
 def run():
-    # =====================
-    # 1. Configuration Setup
-    # =====================
-    CONTROLLER_IP = '127.0.0.1'  # Localhost
-    OF_PORT = 6633               # ONOS default port
-    TOPO_DEPTH = 2
-    TOPO_FANOUT = 2
-    
-    # =====================
-    # 2. Topology Setup
-    # =====================
+    # Configurações iniciais
+    CONTROLLER_IP = '127.0.0.1'  # IP do controlador SDN
+    OF_PORT = 6633               # Porta padrão do ONOS
+    TOPO_DEPTH = 2               # Profundidade da topologia em árvore
+    TOPO_FANOUT = 2              # Número de filhos por nó
+
+    # Criação da topologia em árvore
     info('*** Creating tree topology: depth={}, fanout={}\n'.format(TOPO_DEPTH, TOPO_FANOUT))
     topo = TreeTopo(depth=TOPO_DEPTH, fanout=TOPO_FANOUT)
-    
-    # =====================
-    # 3. Controller Setup
-    # =====================
+
+    # Definição do controlador remoto
     info('*** Configuring remote controller: {}:{}\n'.format(CONTROLLER_IP, OF_PORT))
     controller = RemoteController(
-        'c0', 
-        ip=CONTROLLER_IP, 
+        'c0',
+        ip=CONTROLLER_IP,
         port=OF_PORT,
-        protocols='OpenFlow13'  # Explicit protocol specification
+        protocols='OpenFlow13'
     )
-    
-    # =====================
-    # 4. Network Initialization
-    # =====================
+
+    # Inicialização da rede Mininet com o controlador e topologia
     info('*** Creating Mininet network\n')
     net = Mininet(
         topo=topo,
         controller=controller,
-        switch=OVSSwitch,        # ovsk = OVS kernel switch
-        autoSetMacs=True,        # Automatically set MAC addresses
-        waitConnected=True      # Wait for switches to connect
+        switch=OVSSwitch,
+        autoSetMacs=True,
+        waitConnected=True
     )
-    
-    # =====================
-    # 5. Start Network
-    # =====================
+
+    # Inicializa a rede
     net.start()
-    
-    # =====================
-    # 6. Additional Configuration
-    # =====================
-    # Explicitly set OpenFlow version on each switch
+
+    # Configura manualmente o protocolo OpenFlow13 em cada switch
     for switch in net.switches:
         info('*** Configuring switch {} to use OpenFlow13\n'.format(switch.name))
         switch.cmd('ovs-vsctl set bridge', switch, 'protocols=OpenFlow13')
-    
+
+    # Aguarda switches estabilizarem
     info('*** Waiting switches initializing...\n')
     time.sleep(10)
-    # =====================
-    # 7. Test Connectivity
-    # =====================
+
+    # Testa conectividade entre todos os hosts
     info('*** Testing network connectivity\n')
     net.pingAll()
-    
-    # =====================
-    # 8. Start CLI (Interactive Mode)
-    # =====================
+
+    # Executa script 'fair.py' no host h1 e exibe saída em tempo real
     h1 = net.get('h1')
-    
     proc = h1.popen(
-        ['python', '-u', 'fair.py'],  # -u is CRITICAL here
+        ['python', '-u', 'fair.py'],  # -u: modo unbuffered para saída em tempo real
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         text=True
     )
-    
-    # Read output line by line in real-time
+
+    # Exibe a saída do script linha por linha até que o processo termine ou seja interrompido
     try:
         while True:
             line = proc.stdout.readline()
             if not line:
                 if proc.poll() is not None:
-                    break  # Process finished
-                continue  # No output yet
+                    break
+                continue
             print(f"[h1] {line.strip()}")
     except KeyboardInterrupt:
         print("\nStopping...")
     finally:
         if proc.poll() is None:
             proc.terminate()
-    
-    
-    # =====================
-    # 9. Cleanup
-    # =====================
+
+    # Finaliza a rede
     info('*** Stopping network\n')
     net.stop()
 
 if __name__ == '__main__':
-    setLogLevel('info')  # Set log level to show info messages
+    setLogLevel('info')
     run()
