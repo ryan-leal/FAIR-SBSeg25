@@ -1,8 +1,9 @@
-# FAIR-SBSeg25: Ferramenta Automatizada para Testes de Segurança em Ambientes SDN/5G
+# FAIR: Ambiente e Testes de Segurança Abertos e Automatizados em Redes SDN
+
 
 [![Licença](https://img.shields.io/badge/License-MIT-blue)](https://opensource.org/licenses/MIT)
 
-**Visão Geral:**
+## Resumo:
 
 _FAIR-SBSeg25 é uma ferramenta para automação de testes de segurança e facilmente integrável em diferentes pipelines. Além disso, a ferramenta
 possui scripts que permitem o usuário facilmente modificar para diferentes usos, incluindo mais ataques ou ainda permitindo executar um ambiente SDN automatizado
@@ -12,19 +13,26 @@ e pronto para testes._
 
 ## Funcionalidades
 
-- Automação Completa do Ambiente SDN: instalação de Docker, Mininet e controladores (ONOS/Ryu), com detecção de sistema operacional e pull condicional de imagens.
+- Automação Completa do Ambiente SDN:
+  - instalação de Docker, Mininet e controladores (ONOS/Ryu), com detecção de sistema operacional e pull condicional de imagens.
 
-- Topologia Virtual Inteligente: criação e execução automática de topologias Mininet (padrão ou customizadas), com espera ativa pela conexão OpenFlow.
+- Topologia Virtual Inteligente:
+  - criação e execução automática de topologias Mininet (padrão ou customizadas), com espera ativa pela conexão OpenFlow.
 
-- Execução Automatizada de Ataques: suporte a ataques como MAC Flood e SYN Flood.
+- Execução Automatizada de Ataques:
+  - suporte a ataques como MAC Flood e SYN Flood.
 
-- Arquitetura Modular: novos scripts de ataque podem ser adicionados sem alterar a lógica principal do sistema.
+- Arquitetura Modular:
+  - novos scripts de ataque podem ser adicionados sem alterar a lógica principal do sistema.
 
-- Coleta de Métricas: tempo de execução, status de ataque, saída de ferramentas..
+- Coleta de Métricas:
+  - tempo de execução, status de ataque, saída de ferramentas.
 
-- Geração de Logs e Captura de Tráfego: registros detalhados em .log e arquivos .pcap via tcpdump.
+- Geração de Logs e Captura de Tráfego:
+  - registros detalhados em .log.
 
-- Parametrização Flexível: configurações centralizadas em config.py, facilitando integração com pipelines DevOps e CI/CD.
+- Parametrização Flexível:
+  - configurações centralizadas em config.py, facilitando integração com pipelines DevOps e CI/CD.
 
 ---
 
@@ -43,7 +51,6 @@ e pronto para testes._
   - Kali Linux/Ubuntu
   - Mininet
   - Controlador ONOS/RYU
-  - Topologia com switches P4
 
 ---
 
