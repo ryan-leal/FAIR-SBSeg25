@@ -5,9 +5,7 @@
 
 ## Resumo:
 
-_FAIR-SBSeg25 é uma ferramenta para automação de testes de segurança e facilmente integrável em diferentes pipelines. Além disso, a ferramenta
-possui scripts que permitem o usuário facilmente modificar para diferentes usos, incluindo mais ataques ou ainda permitindo executar um ambiente SDN automatizado
-e pronto para testes._
+_Este artigo apresenta a FAIR, uma ferramenta open source que simplifica testes de segurança em redes SDN. Sem a necessidade de configurações manuais extensas, a FAIR monta automaticamente um ambiente de rede de testes e executa simulações de ataques para demonstrar como uma rede SDN reage. O usuário pode personalizar cenários e coletar métricas sem intervenção constante. A FAIR foi validada em uma máquina virtual básica — onde todo o ambiente SDN foi construído do zero — e seu módulo de testes de segurança em um testbed da RNP. A FAIR mostrou-se fácil de usar, bem integrada às ferramentas comuns e capaz de fornecer resultados consistentes para suportar fluxos de desenvolvimento contínuo._
 
 ---
 
